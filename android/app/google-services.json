@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "924152729551",
+    "firebase_url": "https://world-help-f6c7b-default-rtdb.firebaseio.com",
+    "project_id": "world-help-f6c7b",
+    "storage_bucket": "world-help-f6c7b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:924152729551:android:d6b4d55624256f09cf8cba",
+        "android_client_info": {
+          "package_name": "com.world.help.worldhelps"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "924152729551-rmmmbc0n2prms0is3qqo927625d10itn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEIvN2rOOPKW0ofrJZdGDsA-KcC5MakXk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "924152729551-rmmmbc0n2prms0is3qqo927625d10itn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
