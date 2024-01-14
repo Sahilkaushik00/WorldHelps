@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:typed_data';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -32,6 +33,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(LoadingState());
         try {
           await authRepository.signup(
+            name: event.name,
+            bio: event.bio,
+            file: event.file,
             email: event.email,
             password: event.password,
           );

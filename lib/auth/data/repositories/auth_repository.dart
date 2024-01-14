@@ -1,15 +1,51 @@
+import 'dart:developer';
+import 'dart:typed_data';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:worldhelps/auth/data/model/user.dart' as model;
+import 'package:worldhelps/auth/data/repositories/storage_repo.dart';
 
 class AuthRepository {
   final _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   // register method
-  Future<void> signup({required String email, required String password}) async {
+  Future<void> signup({
+    required String email,
+    required String password,
+    required String name,
+    required String bio,
+    required Uint8List file,
+  }) async {
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
+      // create user
+      UserCredential cred = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      log(cred.user!.uid.toString());
+
+      String photourl = await StorageRepository()
+          .uploadImageToStorage('profilePics', file, false);
+      // add user detail to databse
+
+      model.User user = model.User(
+        username: name,
+        email: email,
+        uid: cred.user!.uid,
+        photoUrl: photourl,
+        bio: bio,
+        followers: [],
+        following: [],
+      );
+
+      log(user.toJson());
+
+      await _firestore
+          .collection('users')
+          .doc(cred.user!.uid)
+          .set(user.toMap());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         throw ('The password provided is too weak.');
