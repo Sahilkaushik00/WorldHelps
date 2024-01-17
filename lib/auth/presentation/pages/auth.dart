@@ -4,7 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:worldhelps/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:worldhelps/auth/presentation/pages/register.dart';
 import 'package:worldhelps/constants/colors.dart';
-import 'package:worldhelps/hometemp.dart';
+// import 'package:worldhelps/hometemp.dart';
+
+import '../../../user/presentation/pages/home.dart';
+import '../../../utils/utils.dart';
 
 class AuthenticationScreen extends StatelessWidget {
   const AuthenticationScreen({super.key});
@@ -39,25 +42,12 @@ class AuthenticationScreen extends StatelessWidget {
           if (state is Authenticated) {
             return const HomeScreen();
           } else {
-            return RegisterScreen();
+            return const RegisterScreen();
           }
         },
       ),
     );
   }
 
-  void notif(
-      {required BuildContext context,
-      required Color color,
-      required String text}) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: color,
-        content: Text(
-          text,
-          style: const TextStyle(color: primaryWhite),
-        ),
-      ),
-    );
-  }
+
 }

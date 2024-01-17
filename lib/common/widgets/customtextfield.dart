@@ -9,13 +9,15 @@ class CustomTextField extends StatelessWidget {
       required this.hintText,
       required this.keyboardType,
       this.onFieldSubmitted,
-      this.validator});
+      this.validator,
+      this.maxLines});
   final TextEditingController controller;
   final bool ispass;
   final String hintText;
   final TextInputType keyboardType;
   final void Function(String)? onFieldSubmitted;
   final String? Function(String?)? validator;
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class CustomTextField extends StatelessWidget {
         keyboardType: keyboardType,
         controller: controller,
         obscureText: ispass,
-        maxLines: 1,
+        maxLines: maxLines ?? 1,
         validator: validator,
         // onFieldSubmitted: onFieldSubmitted ?? FocusScope.of(context).nextFocus(),
         style: const TextStyle(color: primaryDark, fontSize: 16),

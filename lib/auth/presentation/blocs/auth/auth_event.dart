@@ -19,7 +19,7 @@ class SignupRequested extends AuthEvent {
   });
 
   @override
-  List<Object?> get props => [email, password];
+  List<Object?> get props => [email, password, name, bio, file];
 }
 
 class SigninRequested extends AuthEvent {

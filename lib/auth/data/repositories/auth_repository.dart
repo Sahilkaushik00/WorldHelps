@@ -6,10 +6,19 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:worldhelps/auth/data/model/user.dart' as model;
 import 'package:worldhelps/auth/data/repositories/storage_repo.dart';
+import 'package:worldhelps/user/data/remote/models/user.dart';
 
 class AuthRepository {
   final _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Future<UserModel> getUserDetails() async {
+    User currentuser = _firebaseAuth.currentUser!;
+    DocumentSnapshot snap =
+        await _firestore.collection('users').doc(currentuser.uid).get();
+    return UserModel.fromSnap(snap);
+  }
+
   // register method
   Future<void> signup({
     required String email,

@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:worldhelps/utils/utils.dart';
 import '../blocs/auth/auth_bloc.dart';
@@ -69,8 +70,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     width: double.infinity,
                     padding: const EdgeInsets.all(10),
                     alignment: Alignment.bottomLeft,
-                    decoration: const BoxDecoration(
-                      color: primaryDark,
+                    decoration:  const BoxDecoration(
+                      color: primary,
+                      // image: DecorationImage(image: AssetImage('assets/photos/bg1.jpeg'),fit: BoxFit.cover),
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(10),
                         topRight: Radius.circular(10),
@@ -81,7 +83,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       children: [
                         const Text(
                           "Register your \n Account",
-                          style: TextStyle(color: primaryWhite, fontSize: 32),
+                          style: TextStyle(
+                              color: primaryWhite,
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold),
                         ),
                         GestureDetector(
                           onTap: () {
@@ -98,6 +103,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     )
                                   : const CircleAvatar(
                                       backgroundColor: primaryGrey,
+
                                       radius: 50,
                                       child: Icon(
                                         Icons.person_2_rounded,
