@@ -20,7 +20,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final ht = MediaQuery.of(context).size.height;
 
-    final _authbloc = BlocProvider.of<AuthBloc>(context);
+    final authbloc = BlocProvider.of<AuthBloc>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -106,7 +106,7 @@ class LoginScreen extends StatelessWidget {
                       child: const Text("Register"),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          _authbloc.add(
+                          authbloc.add(
                             SigninRequested(
                               email: emailController.text,
                               password: passController.text,

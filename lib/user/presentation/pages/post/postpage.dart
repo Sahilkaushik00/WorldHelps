@@ -14,8 +14,7 @@ class PostScreenImage extends StatefulWidget {
   const PostScreenImage({super.key});
 
   @override
-  State<PostScreenImage> createState() =>
-      _PostScreenImageState();
+  State<PostScreenImage> createState() => _PostScreenImageState();
 }
 
 class _PostScreenImageState extends State<PostScreenImage> {
@@ -33,8 +32,7 @@ class _PostScreenImageState extends State<PostScreenImage> {
               // Makes this button the default (bolder)
               onPressed: () async {
                 Navigator.of(context).pop();
-                Uint8List file =
-                    await pickImage(ImageSource.camera);
+                Uint8List file = await pickImage(ImageSource.camera);
                 setState(() {
                   _file = file;
                 });
@@ -46,8 +44,7 @@ class _PostScreenImageState extends State<PostScreenImage> {
               // Makes this button the default (bolder)
               onPressed: () async {
                 Navigator.of(context).pop();
-                Uint8List file =
-                    await pickImage(ImageSource.gallery);
+                Uint8List file = await pickImage(ImageSource.gallery);
                 setState(() {
                   _file = file;
                 });
@@ -97,24 +94,26 @@ class _PostScreenImageState extends State<PostScreenImage> {
 
   @override
   Widget build(BuildContext context) {
-    final _postBloc = BlocProvider.of<PostBloc>(context);
-    final _userBloc = BlocProvider.of<UserBloc>(context);
+    final postBloc = BlocProvider.of<PostBloc>(context);
+    final userBloc = BlocProvider.of<UserBloc>(context);
 
     return BlocListener<PostBloc, PostState>(
       listener: (context, state) {
         if (state is PostErrorState) {
-          notif(context: context,color: errorColors,text: state.err);
+          notif(context: context, color: errorColors, text: state.err);
           Navigator.of(context).pop();
         }
         if (state is PostSucessState) {
           Navigator.of(context).popUntil((route) => route.isFirst);
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => const HomeScreen()));
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (_) => const HomeScreen()));
         }
 
         if (state is PostLoadingState) {
           showDialog(
             context: context,
-            builder: (context) => const Center(child: CupertinoActivityIndicator(color: primaryDark),
+            builder: (context) => const Center(
+              child: CupertinoActivityIndicator(color: primaryDark),
             ),
           );
         }
@@ -149,15 +148,13 @@ class _PostScreenImageState extends State<PostScreenImage> {
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: ClipRRect(
-                          borderRadius:
-                              BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(10),
                           child: Image(
                             height: 250,
                             fit: BoxFit.cover,
                             width: double.maxFinite,
                             image: MemoryImage(_file!),
-                            filterQuality:
-                                FilterQuality.high,
+                            filterQuality: FilterQuality.high,
                           ),
                         ),
                       ),
@@ -173,8 +170,7 @@ class _PostScreenImageState extends State<PostScreenImage> {
                         width: double.maxFinite,
                         decoration: BoxDecoration(
                           color: primaryWhite,
-                          borderRadius:
-                              BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         child: const Icon(
                           Icons.image,
@@ -190,29 +186,31 @@ class _PostScreenImageState extends State<PostScreenImage> {
                 ispass: false,
                 hintText: "Enter Caption",
                 keyboardType: TextInputType.emailAddress,
-                onFieldSubmitted: (p0) =>FocusScope.of(context).nextFocus(),
+                onFieldSubmitted: (p0) => FocusScope.of(context).nextFocus(),
                 maxLines: 4,
               ),
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: ElevatedButton(
-                  onPressed: () => _postBloc.add(
+                  onPressed: () => postBloc.add(
                     PostUploadRequest(
                       description: caption.text,
                       file: _file!,
-                      uid: _userBloc.userRepository.getUser.uid,
-                      username: _userBloc.userRepository.getUser.username,
-                      profileImage: _userBloc.userRepository.getUser.photoUrl,
+                      uid: userBloc.userRepository.getUser.uid,
+                      username: userBloc.userRepository.getUser.username,
+                      profileImage: userBloc.userRepository.getUser.photoUrl,
                     ),
                   ),
                   child: BlocBuilder<PostBloc, PostState>(
                     builder: (context, state) {
-                     if(state is PostLoadingState){
-                       return const CircularProgressIndicator(color: primaryWhite,);
-                     }else{
-                       return const Text("Post");
-                     }
+                      if (state is PostLoadingState) {
+                        return const CircularProgressIndicator(
+                          color: primaryWhite,
+                        );
+                      } else {
+                        return const Text("Post");
+                      }
                     },
                   ),
                 ),
@@ -230,7 +228,9 @@ class _PostScreenImageState extends State<PostScreenImage> {
       child: Text(
         title,
         style: const TextStyle(
-            color: Colors.black, fontSize: 18,),
+          color: Colors.black,
+          fontSize: 18,
+        ),
       ),
     );
   }

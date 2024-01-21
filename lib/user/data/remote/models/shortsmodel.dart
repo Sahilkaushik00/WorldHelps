@@ -4,28 +4,32 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:flutter/foundation.dart';
 
-class PostModel {
+class ShortsModel {
   final String description;
   final String username;
   final String uid;
   final String postId;
   final datePublished;
-  final String postUrl;
+  final String shortsUrl;
   final String profileImage;
+  final String title;
+  final String subtitle;
   final likes;
 
-  PostModel({
+  ShortsModel({
     required this.likes,
     required this.description,
     required this.username,
     required this.uid,
     required this.postId,
     required this.datePublished,
-    required this.postUrl,
+    required this.shortsUrl,
     required this.profileImage,
+    required this.title,
+    required this.subtitle,
   });
 
-  PostModel copyWith({
+  ShortsModel copyWith({
     String? description,
     String? username,
     String? uid,
@@ -33,16 +37,20 @@ class PostModel {
     String? datePublished,
     String? postUrl,
     String? profileImage,
+    String? title,
+    String? subtitle,
   }) {
-    return PostModel(
+    return ShortsModel(
       description: description ?? this.description,
       username: username ?? this.username,
       uid: uid ?? this.uid,
       postId: postId ?? this.postId,
       datePublished: datePublished ?? this.datePublished,
-      postUrl: postUrl ?? this.postUrl,
+      shortsUrl: postUrl ?? this.shortsUrl,
       profileImage: profileImage ?? this.profileImage,
       likes: likes ?? likes,
+      title: title ?? this.title,
+      subtitle: subtitle ?? this.subtitle,
     );
   }
 
@@ -53,37 +61,41 @@ class PostModel {
       'uid': uid,
       'postId': postId,
       'datePublished': datePublished,
-      'postUrl': postUrl,
+      'shortsUrl': shortsUrl,
       'profileImage': profileImage,
       'likes': likes,
+      'title': title,
+      'subtitle': subtitle,
     };
   }
 
-  factory PostModel.fromMap(Map<String, dynamic> map) {
-    return PostModel(
+  factory ShortsModel.fromMap(Map<String, dynamic> map) {
+    return ShortsModel(
       description: map['description'] as String,
       username: map['username'] as String,
       uid: map['uid'] as String,
       postId: map['postId'] as String,
       datePublished: map['datePublished'] as String,
-      postUrl: map['postUrl'] as String,
+      shortsUrl: map['shortsUrl'] as String,
       profileImage: map['profileImage'] as String,
       likes: map['likes'] as dynamic,
+      title: map['title'] as String,
+      subtitle: map['subtitle'] as String,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory PostModel.fromJson(String source) =>
-      PostModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory ShortsModel.fromJson(String source) =>
+      ShortsModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'PostModel(description: $description, username: $username, uid: $uid, postId: $postId, datePublished: $datePublished, postUrl: $postUrl, profileImage: $profileImage,likes: $likes)';
+    return 'PostModel(description: $description, username: $username, uid: $uid, postId: $postId, datePublished: $datePublished, shortsUrl: $shortsUrl, profileImage: $profileImage,likes: $likes,title: $title,subtitle: $subtitle)';
   }
 
   @override
-  bool operator ==(covariant PostModel other) {
+  bool operator ==(covariant ShortsModel other) {
     if (identical(this, other)) return true;
 
     return other.description == description &&
@@ -91,9 +103,11 @@ class PostModel {
         other.uid == uid &&
         other.postId == postId &&
         other.datePublished == datePublished &&
-        other.postUrl == postUrl &&
+        other.shortsUrl == shortsUrl &&
         other.profileImage == profileImage &&
-        other.likes == likes;
+        other.likes == likes &&
+        other.title == title &&
+        other.subtitle == subtitle;
   }
 
   @override
@@ -103,23 +117,27 @@ class PostModel {
         uid.hashCode ^
         postId.hashCode ^
         datePublished.hashCode ^
-        postUrl.hashCode ^
+        shortsUrl.hashCode ^
         profileImage.hashCode ^
-        likes.hashCode;
+        likes.hashCode ^
+        title.hashCode ^
+        subtitle.hashCode;
   }
 
-  static PostModel fromSnap(DocumentSnapshot snapshot) {
+  static ShortsModel fromSnap(DocumentSnapshot snapshot) {
     var snap = snapshot.data() as Map<String, dynamic>;
 
-    return PostModel(
+    return ShortsModel(
       username: snap['username'],
       description: snap['description'],
       uid: snap['uid'],
-      postUrl: snap['postUrl'],
+      shortsUrl: snap['shortsUrl'],
       profileImage: snap['profileImage'],
       datePublished: snap['datePublished'],
       postId: snap['postId'],
       likes: snap['likes'],
+      title: snap['title'],
+      subtitle: snap['subtitle'],
     );
   }
 }

@@ -54,7 +54,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     final ht = MediaQuery.of(context).size.height;
 
-    final _authbloc = BlocProvider.of<AuthBloc>(context);
+    final authbloc = BlocProvider.of<AuthBloc>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -70,7 +70,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     width: double.infinity,
                     padding: const EdgeInsets.all(10),
                     alignment: Alignment.bottomLeft,
-                    decoration:  const BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: primary,
                       // image: DecorationImage(image: AssetImage('assets/photos/bg1.jpeg'),fit: BoxFit.cover),
                       borderRadius: BorderRadius.only(
@@ -103,7 +103,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     )
                                   : const CircleAvatar(
                                       backgroundColor: primaryGrey,
-
                                       radius: 50,
                                       child: Icon(
                                         Icons.person_2_rounded,
@@ -222,7 +221,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           print(file);
-                          _authbloc.add(
+                          authbloc.add(
                             SignupRequested(
                               name: nameController.text,
                               bio: bioController.text,

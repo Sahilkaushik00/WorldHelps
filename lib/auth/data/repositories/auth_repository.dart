@@ -72,7 +72,7 @@ class AuthRepository {
   Future<User?> getCurrentUser() async {
     User? user;
     try {
-      user = await _firebaseAuth.currentUser;
+      user = _firebaseAuth.currentUser;
       return user;
     } on FirebaseAuthException catch (e) {
       throw Exception('Error occured while signing out ${e.message}');

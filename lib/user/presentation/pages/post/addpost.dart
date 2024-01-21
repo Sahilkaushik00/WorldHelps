@@ -1,6 +1,13 @@
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:worldhelps/constants/colors.dart';
 import 'package:worldhelps/user/presentation/pages/post/postpage.dart';
+
+import 'confirm_screen.dart';
 
 class AddpostScreen extends StatefulWidget {
   const AddpostScreen({super.key});
@@ -10,6 +17,62 @@ class AddpostScreen extends StatefulWidget {
 }
 
 class _AddpostScreenState extends State<AddpostScreen> {
+  // pick video
+  pickVideo(ImageSource src, BuildContext context) async {
+    final video = await ImagePicker().pickVideo(source: src);
+    if (video != null) {
+      log("video not null");
+      Navigator.of(context).pop();
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => ConfirmScreen(
+            videoFile: File(video.path),
+            videoPath: video.path,
+          ),
+        ),
+      );
+    } else {}
+  }
+
+  // shows options
+  selectVideo(BuildContext context) async {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return CupertinoAlertDialog(
+          title: const Text("create a post"),
+          actions: [
+            CupertinoDialogAction(
+              isDefaultAction: true,
+              onPressed: () async {
+                pickVideo(ImageSource.camera, context);
+                Navigator.of(context).pop();
+              },
+              child: const Text('choose from camera'),
+            ),
+            CupertinoDialogAction(
+              isDefaultAction: true,
+              onPressed: () async {
+                await pickVideo(ImageSource.gallery, context);
+              },
+              child: const Text('choose from gallery'),
+            ),
+            CupertinoDialogAction(
+              isDefaultAction: true,
+              onPressed: () async {
+                Navigator.of(context).pop();
+              },
+              child: const Text(
+                'Cancel',
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +86,7 @@ class _AddpostScreenState extends State<AddpostScreen> {
             children: [
               Expanded(
                 child: GestureDetector(
+                  onTap: () => selectVideo(context),
                   child: postCard(icon: Icons.movie, text: 'Shorts'),
                 ),
               ),

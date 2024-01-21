@@ -11,8 +11,10 @@ import 'package:worldhelps/constants/colors.dart';
 import 'package:worldhelps/user/presentation/manager/user_bloc/user_bloc.dart';
 import 'package:worldhelps/user/presentation/pages/post/addpost.dart';
 import 'package:worldhelps/user/presentation/pages/donatescreen.dart';
+import 'package:worldhelps/user/presentation/pages/reelpage/reelpage.dart';
 
 import '../widgets/post.dart';
+// import 'reel.dart';
 
 // import '../widgets/post.dart';
 
@@ -29,7 +31,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _userbloc = BlocProvider.of<UserBloc>(context);
+    final userbloc = BlocProvider.of<UserBloc>(context);
     return Scaffold(
       appBar: AppBar(
         leading: const Icon(
@@ -46,8 +48,8 @@ class HomeScreen extends StatelessWidget {
                 if (state is UserRefreshedState) {
                   return CircleAvatar(
                     radius: 15,
-                    backgroundImage: CachedNetworkImageProvider(_userbloc
-                        .userRepository.getUser.photoUrl),
+                    backgroundImage: CachedNetworkImageProvider(
+                        userbloc.userRepository.getUser.photoUrl),
                   );
                 } else {
                   return const SizedBox();
@@ -61,33 +63,11 @@ class HomeScreen extends StatelessWidget {
       body: BlocBuilder<UserBloc, UserState>(
         builder: (context, state) {
           if (state is UserRefreshedState) {
-            // return ListView.builder(
-            //   physics: const BouncingScrollPhysics(
-            //     decelerationRate: ScrollDecelerationRate.normal,
-            //   ),
-            //   itemCount: 20,
-            //   itemBuilder: (context, index) {
-            //     return const PostWidget(
-            //       postImageUrl:
-            //           'https://images.unsplash.com/photo-1682687220208-22d7a2543e88?q=80&w=1375&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-            //       postUserName: 'Username',
-            //       locaton: 'location',
-            //       postUserImageUrl:
-            //           'https://images.unsplash.com/photo-1682687220208-22d7a2543e88?q=80&w=1375&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-            //       caption:
-            //           'this is the caption for the post,You can add your text',
-            //       noOfComments: '20',
-            //       currentUserImageUrl:
-            //           'https://images.unsplash.com/photo-1682687220208-22d7a2543e88?q=80&w=1375&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-            //       time: '2 hours ago',
-            //     );
-            //   },
-            // );
             return StreamBuilder(
-              stream: FirebaseFirestore.instance.collection('posts').snapshots(),
-              builder: (context,AsyncSnapshot<QuerySnapshot<Map<String,dynamic>>> snapshot) {
-                if(snapshot.connectionState==ConnectionState.waiting){
-                  return const Center(child: CupertinoActivityIndicator(),);
+              stream:FirebaseFirestore.instance.collection('posts').snapshots(),
+              builder: (context,AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CupertinoActivityIndicator());
                 }
                 return ListView.builder(
                   physics: const BouncingScrollPhysics(
@@ -96,15 +76,18 @@ class HomeScreen extends StatelessWidget {
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) {
                     return PostWidget(
-                      postUserImageUrl:snapshot.data!.docs[index]['profileImage'],
+                      postUserImageUrl: snapshot.data!.docs[index]
+                          ['profileImage'],
                       postUserName: snapshot.data!.docs[index]['username'],
                       // locaton: 'location',
                       postImageUrl: snapshot.data!.docs[index]['postUrl'],
 
-                      caption: snapshot.data!.docs[index]['description'] ,
+                      caption: snapshot.data!.docs[index]['description'],
                       noOfComments: '20',
-                      currentUserImageUrl:_userbloc.userRepository.getUser.photoUrl,
-                      time: snapshot.data!.docs[index]['datePublished'].toDate(),
+                      currentUserImageUrl:
+                          userbloc.userRepository.getUser.photoUrl,
+                      time:
+                          snapshot.data!.docs[index]['datePublished'].toDate(),
                     );
                   },
                 );
@@ -133,15 +116,19 @@ class HomeScreen extends StatelessWidget {
             icon: Icon(Icons.home),
             label: 'Home',
           ),
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.movie),
+          BottomNavigationBarItem(
+            icon: GestureDetector(
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const ReelScreen()),
+              ),
+              child: const Icon(Icons.movie),
+            ),
             label: 'Reel',
           ),
           BottomNavigationBarItem(
             icon: GestureDetector(
               onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                    builder: (_) => const AddpostScreen()),
+                MaterialPageRoute(builder: (_) => const AddpostScreen()),
               ),
               child: const Icon(Icons.add_box),
             ),
@@ -156,11 +143,9 @@ class HomeScreen extends StatelessWidget {
           BottomNavigationBarItem(
             icon: GestureDetector(
               onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                    builder: (_) => const DonateScreen()),
+                MaterialPageRoute(builder: (_) => const DonateScreen()),
               ),
-              child:
-                  const Icon(Icons.card_giftcard_rounded),
+              child: const Icon(Icons.card_giftcard_rounded),
             ),
             label: 'Donate',
           ),
@@ -173,3 +158,4 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+

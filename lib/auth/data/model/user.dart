@@ -32,7 +32,7 @@ class User {
     List? following,
   }) {
     return User(
-      username: name ?? this.username,
+      username: name ?? username,
       email: email ?? this.email,
       uid: uid ?? this.uid,
       photoUrl: photoUrl ?? this.photoUrl,

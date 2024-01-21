@@ -6,7 +6,9 @@ import 'package:worldhelps/splash_screen.dart';
 import 'package:worldhelps/theme/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:worldhelps/user/data/repositories/post_repo.dart';
+import 'package:worldhelps/user/data/repositories/shorts_repository.dart';
 import 'package:worldhelps/user/presentation/manager/post_bloc/post_bloc.dart';
+import 'package:worldhelps/user/presentation/manager/shorts_bloc/shorts_bloc.dart';
 import 'auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -41,25 +43,32 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(
           create: (context) => PostRepository(),
         ),
+        RepositoryProvider(
+          create: (context) => ShortsRepository(),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
             create: (context) => AuthBloc(
-              authRepository:RepositoryProvider.of<AuthRepository>(context),
+              authRepository: RepositoryProvider.of<AuthRepository>(context),
             ),
           ),
           BlocProvider(
             create: (context) => UserBloc(
-              userRepository:RepositoryProvider.of<UserRepository>(context),
+              userRepository: RepositoryProvider.of<UserRepository>(context),
             ),
           ),
           BlocProvider(
             create: (context) => PostBloc(
-              postRepository:RepositoryProvider.of<PostRepository>(context),
+              postRepository: RepositoryProvider.of<PostRepository>(context),
             ),
           ),
-
+          BlocProvider(
+            create: (context) => ShortsBloc(
+              shortsRepository: RepositoryProvider.of<ShortsRepository>(context),
+            ),
+          ),
         ],
         child: MaterialApp(
           title: 'World help',

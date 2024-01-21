@@ -1,4 +1,4 @@
-import 'dart:async';
+// import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:bloc/bloc.dart';
@@ -12,9 +12,9 @@ part 'post_state.dart';
 class PostBloc extends Bloc<PostEvent, PostState> {
   final PostRepository postRepository;
   PostBloc({required this.postRepository}) : super(PostInitial()) {
-    on<PostUploadRequest>((event, emit) async{
+    on<PostUploadRequest>((event, emit) async {
       emit(PostLoadingState());
-      try{
+      try {
         await postRepository.uploadPost(
           description: event.description,
           file: event.file,
@@ -23,7 +23,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
           username: event.username,
         );
         emit(PostSucessState());
-      }catch (e){
+      } catch (e) {
         emit(PostErrorState(err: e.toString()));
       }
     });
