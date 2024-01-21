@@ -14,6 +14,7 @@ import 'package:worldhelps/user/presentation/pages/donatescreen.dart';
 import 'package:worldhelps/user/presentation/pages/reelpage/reelpage.dart';
 
 import '../widgets/post.dart';
+import 'reelpage/shortpage.dart';
 // import 'reel.dart';
 
 // import '../widgets/post.dart';
@@ -119,7 +120,8 @@ class HomeScreen extends StatelessWidget {
           BottomNavigationBarItem(
             icon: GestureDetector(
               onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => const ReelScreen()),
+                // MaterialPageRoute(builder: (_) => const ReelScreen()),
+                MaterialPageRoute(builder: (_) => const ShortScreen()),
               ),
               child: const Icon(Icons.movie),
             ),
