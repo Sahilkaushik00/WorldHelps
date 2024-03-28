@@ -1,6 +1,6 @@
 # worldhelps
 Description:
-Empower Lives is a tech-driven solution aimed at addressing poverty and hunger by leveraging Google technologies. The project utilizes Flutter for the frontend, Firebase for the backend, and Google's Gemini API for intelligent content recommendations. This README provides instructions on how to run the code locally for testing and development purposes.
+WorldHelps is a tech-driven solution aimed at addressing poverty and hunger by leveraging Google technologies. The project utilizes Flutter for the frontend, Firebase for the backend, and Google's Gemini API for intelligent content recommendations. This README provides instructions on how to run the code locally for testing and development purposes.
 
 Instructions:
 
